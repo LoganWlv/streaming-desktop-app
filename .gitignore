@@ -1,0 +1,10 @@
+#Git ignore file
+
+#built files
+*.jar
+target/
+
+
+#eclipse files
+.settings/
+.project
