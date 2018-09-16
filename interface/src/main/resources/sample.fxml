@@ -4,10 +4,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.SDA.admin.Sample_controller">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="797.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.SDA.admin.Sample_controller">
    <children>
       <ImageView id="screen_display" fx:id="screen_display" fitHeight="453.0" fitWidth="778.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
       <Button id="start_b" fx:id="start_b" layoutX="348.0" layoutY="507.0" mnemonicParsing="false" onAction="#streamingStart" text="Start" />
       <Button id="stop_b" fx:id="stop_b" layoutX="409.0" layoutY="507.0" mnemonicParsing="false" onAction="#streamingStop" text="Stop" />
    </children>
-</AnchorPane>
+</fx:root>
