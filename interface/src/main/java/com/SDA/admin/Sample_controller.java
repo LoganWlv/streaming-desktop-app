@@ -3,8 +3,11 @@ package com.SDA.admin;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,9 +63,6 @@ public class Sample_controller implements Initializable {
             BufferedImage im = ro
                 .createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
             byte[] imBytes = toByteArrayAutoClosable(im, "jpg");
-            for (int i = 0; i < imBytes.length; i++) {
-              System.out.println(imBytes[i]);
-            }
             /*
             // Calling the JavaFX Thread to update javafx control
             Platform.runLater(new Runnable() {
@@ -75,12 +75,38 @@ public class Sample_controller implements Initializable {
             });*/
 
             // Sleep for 100 millisecond
+            ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v", "libx264", "-preset", "ultrafast",
+                "-crf", "0", "pipe:1");
+            Process p = pb.start();
+            OutputStream stdin = p.getOutputStream();
+            InputStream stdout = p.getInputStream();
+
+            InputStream bytesToSend = new ByteArrayInputStream(imBytes);
+
+            int buf;
+            int i = 0;
+
+            if (bytesToSend != null) {
+              while ((buf = bytesToSend.read()) != -1) {
+                if (i == 8172) {
+                  stdin.flush();
+                }
+
+                stdin.write(buf);
+              }
+
+              System.out.println("plouf");
+              stdin.close();
+            }
+
             Thread.sleep(1000 / 30);
 
           } catch (Exception ex) {
             // print stack trace or do other stuffs
           }
+
         }
+        // }
         return null;
       }
 
@@ -89,6 +115,19 @@ public class Sample_controller implements Initializable {
     new Thread(t).start();
 
   }
+
+  /*
+   * public static String imgToBase64String(final RenderedImage img, final String
+   * formatName) { final ByteArrayOutputStream os = new ByteArrayOutputStream();
+   * try { ImageIO.write(img, formatName, Base64.getEncoder().wrap(os)); return
+   * os.toString(StandardCharsets.ISO_8859_1.name()); } catch (final IOException
+   * ioe) { throw new UncheckedIOException(ioe); } }
+   * 
+   * public static BufferedImage base64StringToImg(final String base64String) {
+   * try { return ImageIO.read(new
+   * ByteArrayInputStream(Base64.getDecoder().decode(base64String))); } catch
+   * (final IOException ioe) { throw new UncheckedIOException(ioe); } }
+   */
 
   @FXML
   public void streamingStop() {
