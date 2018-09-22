@@ -3,9 +3,10 @@ package com.SDA.admin;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,14 +14,11 @@ import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 
 public class Sample_controller implements Initializable {
 
@@ -59,6 +57,9 @@ public class Sample_controller implements Initializable {
           Robot ro = new Robot();
           BufferedImage im = ro
               .createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+
+          ffmpegEncodeAndSendTo(im);
+
           // final WritableImage image = new WritableImage(500, 500);
           // final Image myPic = SwingFXUtils.toFXImage(im, null);
 
@@ -66,36 +67,40 @@ public class Sample_controller implements Initializable {
           // DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
           // byte[] bytes = buffer.getData();
 
-          ByteArrayOutputStream baos = new ByteArrayOutputStream();
-          ImageIO.write(im, "jpg", baos);
-          baos.flush();
-          byte[] imageInByte = baos.toByteArray();
-          baos.close();
+          // ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v",
+          // "libx264", "-preset", "ultrafast",
+          // "-crf", "0", "test5.png");
 
-          System.out.println(imageInByte);
+          // "CaptureTest.png"
+          // "-c:v", "libx264", "-preset", "ultrafast", "-crf", "0",
 
-          // final String base64String = imgToBase64String(im, "png");
-          // System.out.println(base64String);
-          // byte[] imageBytes = ((DataBufferByte)
-          // im.getData().getDataBuffer()).getData();
+          // pipe:1
+          // Process p = pb.start();
 
-          // Runtime runtime = Runtime.getRuntime();
-          System.out.println("Print ddd");
-          ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v", "libx264", "-preset", "ultrafast",
-              "-crf", "0", "pipe:1");
-          Process p = pb.start();
-          System.out.println("Print eaea");
-          p.getOutputStream().write(imageInByte);
+          // p.getErrorStream()
 
-          byte[] b = new byte[imageInByte.length];
-          p.getInputStream().read(b);
-          System.out.println(b);
+          // System.out.println("Print eaea");
+          // p.getOutputStream().write(convertBufferedImageToBytes(im, "png"));
 
-          InputStream out = new ByteArrayInputStream(b);
-          BufferedImage bImageFromConvert = ImageIO.read(out);
+          // byte[] b = new byte[1000];
 
-          final WritableImage image = new WritableImage(500, 500);
-          final Image myPic = SwingFXUtils.toFXImage(bImageFromConvert, null);
+          // p.getErrorStream().read(b);
+
+          // String err = new String(b, 0, b.length, "UTF-8");
+
+          // System.out.println(b.length);
+
+          // createlogfile(err);
+
+          // byte[] b = new byte[imageInByte.length];
+          // p.getInputStream().read(b);
+          // System.out.println(b);
+
+          // InputStream out = new ByteArrayInputStream(b);
+          // BufferedImage bImageFromConvert = ImageIO.read(out);
+
+          // final WritableImage image = new WritableImage(500, 500);
+          // final Image myPic = SwingFXUtils.toFXImage(bImageFromConvert, null);
 
           // byte[] imageInByte= new BigInteger(hex, 16).toByteArray();
           // InputStream in = new ByteArrayInputStream(imageInByte);
@@ -108,7 +113,7 @@ public class Sample_controller implements Initializable {
             public void run() { // This updates the imageview to newly created Image
               System.out.println("Print toto");
 
-              screen_display.setImage(myPic);
+              // screen_display.setImage(myPic);
             }
           });
 
@@ -128,18 +133,44 @@ public class Sample_controller implements Initializable {
 
   }
 
-  /*
-   * public static String imgToBase64String(final RenderedImage img, final String
-   * formatName) { final ByteArrayOutputStream os = new ByteArrayOutputStream();
-   * try { ImageIO.write(img, formatName, Base64.getEncoder().wrap(os)); return
-   * os.toString(StandardCharsets.ISO_8859_1.name()); } catch (final IOException
-   * ioe) { throw new UncheckedIOException(ioe); } }
-   * 
-   * public static BufferedImage base64StringToImg(final String base64String) {
-   * try { return ImageIO.read(new
-   * ByteArrayInputStream(Base64.getDecoder().decode(base64String))); } catch
-   * (final IOException ioe) { throw new UncheckedIOException(ioe); } }
-   */
+  private byte[] convertBufferedImageToBytes(BufferedImage image, String format) throws IOException {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ImageIO.write(image, format, baos);
+    baos.flush();
+    byte[] imageInByte = baos.toByteArray();
+    baos.close();
+    return imageInByte;
+  }
+
+  private void ffmpegEncodeAndSendTo(BufferedImage image) throws IOException {
+    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v", "libx264", "-preset", "ultrafast", "-crf",
+        "0", "test5.png");
+    Process p = pb.start();
+    p.getOutputStream().write(convertBufferedImageToBytes(image, "png"));
+    byte[] b = new byte[10000];
+    p.getErrorStream().read(b);
+    String err = new String(b, 0, b.length, "UTF-8");
+    createlogfile(err);
+  }
+
+  private void createlogfile(String string) {
+    final String chemin = "logffmpeg.txt";
+    final File fichier = new File(chemin);
+    try {
+      // Creation du fichier
+      fichier.createNewFile();
+      // creation d'un writer (un écrivain)
+      final FileWriter writer = new FileWriter(fichier);
+      try {
+        writer.write(string);
+      } finally {
+        // quoiqu'il arrive, on ferme le fichier
+        writer.close();
+      }
+    } catch (Exception e) {
+      System.out.println("Impossible de creer le fichier");
+    }
+  }
 
   @FXML
   public void streamingStop() {
