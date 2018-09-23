@@ -1,18 +1,23 @@
 package com.SDA.admin;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DirectColorModel;
+import java.awt.image.SampleModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,121 +41,116 @@ public class Sample_controller implements Initializable {
   @FXML
   public void streamingStart(ActionEvent event) {
     System.out.println("Starting streaming...");
-    /*
-     * for (int i = 0; i < 100; i++) { try { System.out.println("Thread start..");
-     * Robot robot = new Robot(); Rectangle box = new
-     * Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); BufferedImage pic =
-     * robot.createScreenCapture(box); Image myPic = SwingFXUtils.toFXImage(pic,
-     * null); screen_display.setImage(myPic);
-     * System.out.println("Thread sleeping.."); Thread.currentThread().sleep(5 *
-     * 1000); } catch (Exception e) { System.out.println("Error: " + e); }
-     * 
-     * }
-     */
-
     Task t = new Task() {
       @Override
       protected Object call() {
-        // while (!stoppped) {
         try {
           System.out.println("Thread start..");
-          Robot ro = new Robot();
-          BufferedImage im = ro
-              .createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+          // Robot ro = new Robot();
+          // BufferedImage im = ro
+          // .createScreenCapture(new
+          // java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+          fromFrameToVideo();
+          // ffmpegDecode(ffmpegEncodeAndSendTo(im));
 
-          ffmpegEncodeAndSendTo(im);
-
-          // final WritableImage image = new WritableImage(500, 500);
-          // final Image myPic = SwingFXUtils.toFXImage(im, null);
-
-          // WritableRaster raster = im.getRaster();
-          // DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
-          // byte[] bytes = buffer.getData();
-
-          // ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v",
-          // "libx264", "-preset", "ultrafast",
-          // "-crf", "0", "test5.png");
-
-          // "CaptureTest.png"
-          // "-c:v", "libx264", "-preset", "ultrafast", "-crf", "0",
-
-          // pipe:1
-          // Process p = pb.start();
-
-          // p.getErrorStream()
-
-          // System.out.println("Print eaea");
-          // p.getOutputStream().write(convertBufferedImageToBytes(im, "png"));
-
-          // byte[] b = new byte[1000];
-
-          // p.getErrorStream().read(b);
-
-          // String err = new String(b, 0, b.length, "UTF-8");
-
-          // System.out.println(b.length);
-
-          // createlogfile(err);
-
-          // byte[] b = new byte[imageInByte.length];
-          // p.getInputStream().read(b);
-          // System.out.println(b);
-
-          // InputStream out = new ByteArrayInputStream(b);
-          // BufferedImage bImageFromConvert = ImageIO.read(out);
-
-          // final WritableImage image = new WritableImage(500, 500);
-          // final Image myPic = SwingFXUtils.toFXImage(bImageFromConvert, null);
-
-          // byte[] imageInByte= new BigInteger(hex, 16).toByteArray();
-          // InputStream in = new ByteArrayInputStream(imageInByte);
-          // BufferedImage bImageFromConvert = ImageIO.read(in);
-          // p.
-
-          // Calling the JavaFX Thread to update javafx control
-
-          Platform.runLater(new Runnable() {
-            public void run() { // This updates the imageview to newly created Image
-              System.out.println("Print toto");
-
-              // screen_display.setImage(myPic);
-            }
-          });
-
-          // Sleep for 100 millisecond
-          Thread.sleep(1000 / 30);
-
+          /*
+           * Platform.runLater(new Runnable() { public void run() { // This updates the
+           * imageview to newly created Image System.out.println("Print toto");
+           * 
+           * // screen_display.setImage(myPic); } });
+           */
         } catch (Exception ex) {
           // print stack trace or do other stuffs
+          System.out.println(ex);
         }
-        // }
         return null;
       }
-
     };
-
     new Thread(t).start();
-
   }
+
+  private int lenght;
 
   private byte[] convertBufferedImageToBytes(BufferedImage image, String format) throws IOException {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ImageIO.write(image, format, baos);
-    baos.flush();
-    byte[] imageInByte = baos.toByteArray();
-    baos.close();
-    return imageInByte;
+    // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    // baos.;
+
+    // byte[] imageBytes = ((DataBufferByte)
+    // image.getData().getDataBuffer()).getData();
+    // ComponentColorModel tete;
+    // ImageIO.write(image, format, baos);
+    // baos.flush();
+    // byte[] imageInByte = baos.toByteArray();
+    // baos.close();
+    // lenght = imageInByte.length;
+    System.out.println("convertBufferedImageToBytes");
+
+    int[] bits = { 8, 8, 8 };
+
+    ComponentColorModel cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), bits, false, false,
+        DirectColorModel.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+
+    SampleModel sm = cm.createCompatibleSampleModel(image.getWidth(), image.getHeight());
+    // DataBufferByte db = new DataBufferByte(image.getWidth()*image.getHeight()*1);
+    // //3 channels buffer
+    DataBufferByte db = new DataBufferByte(image.getWidth() * image.getHeight() * 3); // 3 channels buffer
+    WritableRaster r = WritableRaster.createWritableRaster(sm, db, new java.awt.Point(0, 0));
+    BufferedImage cvImg = new BufferedImage(cm, r, false, null);
+    byte[] imageBytes = ((DataBufferByte) cvImg.getData().getDataBuffer()).getData();
+    System.out.println("tete");
+    return imageBytes;
   }
 
-  private void ffmpegEncodeAndSendTo(BufferedImage image) throws IOException {
-    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-c:v", "libx264", "-preset", "ultrafast", "-crf",
-        "0", "test5.png");
+  private void ffmpegDecode(byte[] imageInByte) throws IOException {
+    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "testa.png");
     Process p = pb.start();
+    p.getOutputStream().write(imageInByte);
+    System.out.println("ffmpegDecode");
+
+  }
+
+  private byte[] ffmpegEncodeAndSendTo(BufferedImage image) throws IOException {
+    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-f", "mpegts", "pipe:1");
+    // "-c:v", "libx264", "-preset", "ultrafast", "-crf", "0",
+    Process p = pb.start();
+
     p.getOutputStream().write(convertBufferedImageToBytes(image, "png"));
-    byte[] b = new byte[10000];
-    p.getErrorStream().read(b);
-    String err = new String(b, 0, b.length, "UTF-8");
+
+    System.out.println("ffmpegEncodeAndSendTo 2");
+    // int lenghterr = p.getErrorStream().available();
+    byte[] a = new byte[10000];
+    p.getErrorStream().read(a);
+
+    System.out.println("ffmpegEncodeAndSendTo 3");
+    String err = new String(a, 0, a.length, "UTF-8");
     createlogfile(err);
+
+    System.out.println(p.getInputStream().available());
+    // int b = p.getInputStream().read();
+
+    byte[] b = new byte[10000];
+    p.getInputStream().read(b);
+
+    // System.out.println(b);
+
+    System.out.println("ffmpegEncodeAndSendTo 1");
+    // int lenght = p.getInputStream().available();
+
+    // byte[] imageInByte = new byte[lenght];
+    // p.getInputStream().read(imageInByte);
+
+    /*
+     * ByteArrayOutputStream baos = new ByteArrayOutputStream(); int b = 0; while (b
+     * != -1) { System.out.println(b); b = p.getInputStream().read();
+     * 
+     * baos.write(b); } baos.flush(); byte[] imageInByte = baos.toByteArray();
+     * baos.close();
+     * 
+     * System.out.println(imageInByte.length);
+     */
+
+    // return imageInByte;
+    return null;
   }
 
   private void createlogfile(String string) {
@@ -163,6 +163,7 @@ public class Sample_controller implements Initializable {
       final FileWriter writer = new FileWriter(fichier);
       try {
         writer.write(string);
+        System.out.println("createlogfile");
       } finally {
         // quoiqu'il arrive, on ferme le fichier
         writer.close();
@@ -172,6 +173,23 @@ public class Sample_controller implements Initializable {
     }
   }
 
+  private void fromFrameToVideo() throws AWTException, IOException, InterruptedException {
+    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "output.mp4");
+    Process p = pb.start();
+    // "-f", "mpegts", "pipe:1"
+    int i = 0;
+    Robot ro = new Robot();
+    while (i <= 240) {
+
+      BufferedImage im = ro.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+      p.getOutputStream().write(convertBufferedImageToBytes(im, "png"));
+      i++;
+      Thread.sleep(1000 / 30);
+      System.out.println(i);
+    }
+
+  }
+
   @FXML
   public void streamingStop() {
     System.out.println("Stopping streaming...");
@@ -179,8 +197,6 @@ public class Sample_controller implements Initializable {
   }
 
   public void initialize(URL location, ResourceBundle resources) {
-    // TODO Auto-generated method stub
 
   }
-
 }

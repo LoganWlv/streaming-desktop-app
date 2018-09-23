@@ -5,6 +5,12 @@
     <artifactId>streaming-desktop-app</artifactId>
     <version>0.0.1</version>
   </parent>
+  
+  <properties>
+    <java.version>1.8</java.version>
+  </properties>
+  
+  
   <groupId>com.streaming-desktop-app</groupId>
   <artifactId>interface</artifactId>
   <version>0.0.1-SNAPSHOT</version>
