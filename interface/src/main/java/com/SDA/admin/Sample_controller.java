@@ -1,22 +1,20 @@
 package com.SDA.admin;
 
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.DirectColorModel;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -37,6 +35,7 @@ public class Sample_controller implements Initializable {
   private Button stop_b;
 
   private boolean stoppped = false;
+  private final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
   @FXML
   public void streamingStart(ActionEvent event) {
@@ -69,36 +68,33 @@ public class Sample_controller implements Initializable {
     new Thread(t).start();
   }
 
-  private int lenght;
-
   private byte[] convertBufferedImageToBytes(BufferedImage image, String format) throws IOException {
-    // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    // baos.;
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    //baos.;
 
-    // byte[] imageBytes = ((DataBufferByte)
-    // image.getData().getDataBuffer()).getData();
-    // ComponentColorModel tete;
-    // ImageIO.write(image, format, baos);
-    // baos.flush();
-    // byte[] imageInByte = baos.toByteArray();
-    // baos.close();
+    //byte[] imageBytes = ((DataBufferByte) image.getData().getDataBuffer()).getData();
+    ComponentColorModel tete;
+    ImageIO.write(image, format, baos);
+    baos.flush();
+    byte[] imageInByte = baos.toByteArray();
+    baos.close();
     // lenght = imageInByte.length;
-    System.out.println("convertBufferedImageToBytes");
+    //System.out.println("convertBufferedImageToBytes");
 
-    int[] bits = { 8, 8, 8 };
+    //int[] bits = { 8, 8, 8 };
 
-    ComponentColorModel cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), bits, false, false,
-        DirectColorModel.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+    //ComponentColorModel cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), bits, false, false,
+    //   DirectColorModel.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
-    SampleModel sm = cm.createCompatibleSampleModel(image.getWidth(), image.getHeight());
+    //SampleModel sm = cm.createCompatibleSampleModel(image.getWidth(), image.getHeight());
     // DataBufferByte db = new DataBufferByte(image.getWidth()*image.getHeight()*1);
     // //3 channels buffer
-    DataBufferByte db = new DataBufferByte(image.getWidth() * image.getHeight() * 3); // 3 channels buffer
-    WritableRaster r = WritableRaster.createWritableRaster(sm, db, new java.awt.Point(0, 0));
-    BufferedImage cvImg = new BufferedImage(cm, r, false, null);
-    byte[] imageBytes = ((DataBufferByte) cvImg.getData().getDataBuffer()).getData();
-    System.out.println("tete");
-    return imageBytes;
+    //DataBufferByte db = new DataBufferByte(image.getWidth() * image.getHeight() * 3); // 3 channels buffer
+    //WritableRaster r = WritableRaster.createWritableRaster(sm, db, new java.awt.Point(0, 0));
+    //BufferedImage cvImg = new BufferedImage(cm, r, false, null);
+    //byte[] imageBytes = ((DataBufferByte) cvImg.getData().getDataBuffer()).getData();
+    //System.out.println("tete");
+    return imageInByte;
   }
 
   private void ffmpegDecode(byte[] imageInByte) throws IOException {
@@ -174,19 +170,26 @@ public class Sample_controller implements Initializable {
   }
 
   private void fromFrameToVideo() throws AWTException, IOException, InterruptedException {
-    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "output.mp4");
-    Process p = pb.start();
+    //ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-i", "pipe:0", "-framerate", "30", "output.mp4");
+    //Process p = pb.start();
     // "-f", "mpegts", "pipe:1"
+    long start = System.currentTimeMillis();
+    System.out.println(start);
+    Rectangle box = new Rectangle(SCREEN_SIZE);
+    BufferedImage im = null;
+
     int i = 0;
     Robot ro = new Robot();
     while (i <= 240) {
-
-      BufferedImage im = ro.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-      p.getOutputStream().write(convertBufferedImageToBytes(im, "png"));
+      im = ro.createScreenCapture(box);
+      //p.getOutputStream().write(convertBufferedImageToBytes(im, "jpg"));
+      //System.out.println(i++);
       i++;
-      Thread.sleep(1000 / 30);
-      System.out.println(i);
+      //Thread.sleep(1000 / 30);
     }
+    System.out.println((System.currentTimeMillis() - start) / 1000);
+
+    //p.destroy();
 
   }
 
