@@ -25,7 +25,7 @@ public class StreamingSession {
   }
 
   public void startSession() {
-    if (pb != null) {
+    if (currentProcess == null || !currentProcess.isAlive()) {
       try {
         currentProcess = pb.start();
       } catch (IOException e) {
@@ -33,7 +33,7 @@ public class StreamingSession {
         e.printStackTrace();
       }
     } else {
-      System.out.println("Please set your process");
+      System.out.println("No process found in streaming session or already one alive.");
     }
   }
 
