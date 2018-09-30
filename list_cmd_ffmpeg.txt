@@ -5,7 +5,29 @@ ffmpeg -list_devices true -f dshow -i dummy
 ffmpeg -f gdigrab -framerate 30 -i desktop output.mkv
 
 
-## audio and device 
+## audio and device explanation : 
+-framerate -> indicate FPS
+
+-rtbufsize ->  
+By default FFmpeg captures frames from the input, and then does whatever you told it to do, for instance, re-encoding them and saving them to an output file. 
+By default if it receives a video frame "too early" (while the previous frame isn't finished yet), it will discard that frame, so that it can keep up the the real time input. 
+You can adjust this by setting the -rtbufsize parameter, though note that if your encoding process can't keep up, eventually you'll still start losing frames just the same 
+(and using it at all can introduce a bit of latency). It may be helpful to still specify some size of buffer, however, otherwise frames may be needlessly dropped possibly. 
+
+-y delete video if it exist
+
+-pix_fmt -> print list of available pixel format
+    Set pixel format. Use -pix_fmts to show all the supported pixel formats. If the selected pixel format can not be selected, ffmpeg will print a warning and select the best pixel format supported by the encoder. 
+	If pix_fmt is prefixed by a +, ffmpeg will exit with an error if the requested pixel format can not be selected, and automatic conversions inside filtergraphs are disabled. 
+	If pix_fmt is a single +, ffmpeg selects the same pixel format as the input (or graph output) and automatic conversions are disabled.
+	
+-gdigrab -i title=<window_name> Capture only the selected window ex : -i title="Blizzard Battle.net"
+
+-b:a bit rate
+
+
+
+
  ffmpeg -framerate 45 -y -rtbufsize 200M -f gdigrab -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo 
  -thread_queue_size 1024 -i audio="audio device" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -c:a aac -strict -2 -ac 2 -b:a 128k "video output.mp4"
  
