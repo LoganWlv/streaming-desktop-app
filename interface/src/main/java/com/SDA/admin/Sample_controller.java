@@ -163,6 +163,7 @@ public class Sample_controller implements Initializable {
       } finally {
         // quoiqu'il arrive, on ferme le fichier
         writer.close();
+
       }
     } catch (Exception e) {
       System.out.println("Impossible de creer le fichier");
@@ -201,5 +202,14 @@ public class Sample_controller implements Initializable {
 
   public void initialize(URL location, ResourceBundle resources) {
 
+  }
+
+  private static byte[] toByteArrayAutoClosable(BufferedImage image, String type) throws IOException {
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+      System.out.println("ImageIO write stream .. \n" + System.currentTimeMillis());
+      ImageIO.write(image, type, out);
+      System.out.println("ImageIO after write stream .. \n" + System.currentTimeMillis());
+      return out.toByteArray();
+    }
   }
 }
