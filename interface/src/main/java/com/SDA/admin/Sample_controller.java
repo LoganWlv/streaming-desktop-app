@@ -17,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class Sample_controller implements Initializable {
 
@@ -28,6 +30,12 @@ public class Sample_controller implements Initializable {
 
   @FXML
   private Button stop_b;
+
+  @FXML
+  private TextFlow text_input_details;
+
+  @FXML
+  private TextFlow text_output_details;
 
   private boolean stoppped = false;
 
@@ -174,7 +182,8 @@ public class Sample_controller implements Initializable {
   }
 
   private void fromFrameToVideo() throws AWTException, IOException, InterruptedException {
-    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-f", "gdigrab","-framerate", "60", "-i", "desktop", "output.mkv");
+    ProcessBuilder pb = new ProcessBuilder("ffmpeg", "-f", "gdigrab", "-framerate", "60", "-i", "desktop",
+        "output.mkv");
     Process p = pb.start();
 
     byte[] a = new byte[10000];
@@ -209,6 +218,9 @@ public class Sample_controller implements Initializable {
   }
 
   public void initialize(URL location, ResourceBundle resources) {
-
+    Text input_text_area = new Text("Flux audio/video information\n");
+    this.text_input_details.getChildren().add(input_text_area);
+    Text output_text_area = new Text("Flux keyboard information\n");
+    this.text_output_details.getChildren().add(output_text_area);
   }
 }
