@@ -10,10 +10,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 
 public class Sample_controller implements Initializable {
+
+  @FXML
+  private AnchorPane main_window;
 
   @FXML
   private ImageView screen_display;
@@ -30,27 +35,20 @@ public class Sample_controller implements Initializable {
   @FXML
   private TextFlow text_output_details;
 
-  private StreamingSession streamingSession;
-
   private boolean stoppped = false;
   private final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+  private DirectMediaPlayerComponent mp;
 
   @FXML
   public void streamingStart(ActionEvent event) {
-    streamingSession = StreamingSession.getInstance();
-    streamingSession.setProcess("notepad++");
+    System.out.println("Streaming start");
 
-    System.out.println("Starting streaming...");
-    streamingSession.startSession();
   }
 
   @FXML
   public void streamingStop() {
-    if (streamingSession != null) {
-      streamingSession.stopSession();
-    } else {
-      System.out.println("No streaming session to stop.");
-    }
+    System.out.println("Streaming stop");
+
   }
 
   public void initialize(URL location, ResourceBundle resources) {

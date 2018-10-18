@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="859.0" style="-fx-background-color: #80ced6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.SDA.admin.Sample_controller">
+<AnchorPane fx:id="main_window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="859.0" style="-fx-background-color: #80ced6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.SDA.admin.Sample_controller">
    <children>
       <Button id="start_b" fx:id="start_b" layoutX="184.0" layoutY="86.0" mnemonicParsing="false" onAction="#streamingStart" prefHeight="34.0" prefWidth="114.0" style="-fx-background-color: #256c74;" text="Start" textFill="WHITE" />
       <Button id="stop_b" fx:id="stop_b" layoutX="574.0" layoutY="86.0" mnemonicParsing="false" onAction="#streamingStop" prefHeight="34.0" prefWidth="114.0" style="-fx-background-color: #256c74;" text="Stop" textFill="WHITE" />

@@ -1,7 +1,15 @@
 package com.SDA.admin;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+/**
+ * To be modified depending on the future architecture.
+ * 
+ * @author LR-PC
+ *
+ */
 public class StreamingSession {
 
   private ProcessBuilder pb;
@@ -22,6 +30,14 @@ public class StreamingSession {
   public void setProcess(String gameName) {
     //TODO Based on gameName find in configuration/database? how to launch the process
     pb = new ProcessBuilder("D:\\Programming\\Notepad++\\notepad++.exe");
+  }
+
+  public InputStream getProcessOutput() {
+    return currentProcess.getInputStream();
+  }
+
+  public OutputStream getProcessInput() {
+    return currentProcess.getOutputStream();
   }
 
   public void startSession() {
