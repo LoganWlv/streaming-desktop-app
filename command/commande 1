@@ -1,0 +1,171 @@
+ffmpeg -y -rtbufsize 200M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -c:v libx264 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -async 1 -f rtp rtp://192.168.1.15:5540 -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+
+ffmpeg -y -rtbufsize 200M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -c:a aac -strict -2 -ac 2 -b:a 128k -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+
+ffmpeg -y -rtbufsize 200M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -c:a aac -strict -2 -ac 2 -b:a 128k
+
+
+ffmpeg -y -rtbufsize 200M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -y -rtbufsize 200M -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://192.168.1.15:5542 >configSon.sdp
+
+ffmpeg -y -rtbufsize 500M -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+
+ffmpeg -y -rtbufsize 500M -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -y -rtbufsize 500M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset veryfast -maxrate 1984k -bufsize 3968k -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset veryfast -maxrate 1984k -bufsize 3968k -pix_fmt yuv420p -an -vsync 0 -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -vsync 0 -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+ffmpeg -copyts -thread_queue_size 512 -vsync 0 -f gdigrab -framerate 25 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset veryfast -an -f rtp rtp://192.168.1.15:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+
+   
+   //audio
+   ffmpeg -f dshow -channel_layout stereo -i audio="Mixage stereo (Realtek High Def" -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://192.168.1.15:5542?option=connect=1 >config.sdp
+   
+   ffmpeg -f dshow -channel_layout stereo -i audio="Mixage stereo (Realtek High Def" -acodec libmp3lame -ab 128k -ar 22050 -vn -f rtp rtp://192.168.1.15:5542?option=connect=1 >config.sdp
+   
+   ffmpeg -f dshow -i audio="Mixage stereo (Realtek High Def" -c:a aac -strict -2 -ac 2 -b:a 128k -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -f dshow -i audio="Mixage stereo (Realtek High Def" -c:a copy -f rtp rtp://192.168.1.15:5542 >config.sdp
+   //
+   
+   ffmpeg -rtbufsize 200M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -an -f rtp rtp://localhost:5540 -c:a aac -strict -2 -ac 2 -b:a 128k -vn -f rtp rtp://localhost:5542 >config.sdp
+   
+   ffmpeg -y -rtbufsize 100M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 10M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 25 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -rtbufsize 100M -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx265 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ffmpeg -y -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i title="Documents publics" -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx265 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://localhost:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://localhost:5542 >config.sdp
+   
+   ffmpeg -y -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx265 -preset ultrafast -tune zerolatency -vf scale=1280:720 -crf 30 -pix_fmt yuv420p -an -f rtp rtp://localhost:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://localhost:5542 >config.sdp
+   
+   ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx265 -preset ultrafast -tune zerolatency -x265-params "keyint=60:min-keyint=60" -crf 30 -pix_fmt yuv420p -vf scale=1280:720 -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   
+   ///////////////
+   // REAL TEST //
+   ///////////////
+   
+   
+   ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx265 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -vf scale=1280:720 -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   //delay 10sec increasing / CPU 90% / RAM non stop increasing
+   
+   
+   ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -vf scale=1280:720 -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   //same but CPU 60% 
+   
+   ffmpeg -benchmark -f gdigrab -framerate 60 -thread_queue_size 1024 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -vf scale=1280:720 -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+   //bof bof
+   
+   ffmpeg -benchmark -f gdigrab -framerate 60 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	//nochange..
+	
+	ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 20M -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	//CPU same / but RAM not moving / 6sec
+		
+	ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 32 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000000 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -f gdigrab -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -pix_fmt yuv420p -an -flush_packets 1 -f rtp rtp://192.168.1.15:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.15:5542 >config.sdp
+	
+	ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -f dshow -channel_layout stereo -thread_queue_size 1024 -i audio="Mixage stereo (Realtek High Def" -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -maxrate 500k -bufsize 1M -pix_fmt yuv420p -an -flush_packets 1 -f rtp rtp://192.168.1.18:5540 -c:a aac -ac 2 -b:a 64k -vn -f rtp rtp://192.168.1.18:5542 >config.sdp
+	
+	
+	
+   // -g X -keyint_min X
+
+    -x265-params "keyint=60:min-keyint=60"
+	
+	
+	/////ARGUMENT/////
+	probesize => buffer de l'input / joue sur ram ??
+	analyzeduration => sur l'input joue sur latence ??
+	rtbufsize => prevent increasing RAM
+	flush_packets 
+	-crf 30 -maxrate 500k -bufsize 1M => quality
+	
+   ///////////
+   // TEST //
+   ///////////
+   
+    -forced-idr 
+   
+   ffmpeg -benchmark -f gdigrab -framerate 30 -thread_queue_size 1024 -draw_mouse 1 -i desktop -c:v libx265 -preset ultrafast -tune zerolatency -x265-params "keyint=60:min-keyint=60" -crf 30 -pix_fmt yuv420p -vf scale=1280:720 -an -f rtp NUL
+   
+   ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -maxrate 1M -bufsize 2M -pix_fmt yuv420p -an -flush_packets 1 -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -c:v libx264 -vf scale=1280:720 -preset ultrafast -tune zerolatency -crf 30 -maxrate 2M -bufsize 2M -pix_fmt yuv420p -an -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+    ffmpeg -f gdigrab -rtbufsize 10M -framerate 30 -thread_queue_size 1024 -probesize 32 -analyzeduration 1000 -avioflags direct -draw_mouse 1 -i desktop -c:v h264_nvenc -preset:v llhq -profile:v high -rc ll_2pass_quality -vf scale=1280:720 -maxrate 2M -bufsize 2M -pix_fmt yuv420p -an -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   
+   ffmpeg -f gdigrab -framerate 30 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -rtbufsize 1M -probesize 32 -analyzeduration 1 -avioflags direct -framerate 30 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+  à teste//
+  ffmpeg -f gdigrab -rtbufsize 1M -probesize 32 -analyzeduration 1 -avioflags direct -framerate 30 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -maxrate 1M -bufsize 2M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -framerate 30 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset ll -maxrate 1M -bufsize 2M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -framerate 30 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 500 -bufsize 4M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -framerate 60 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 1M -bufsize 4M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -framerate 60 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 1M -bufsize 8M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -f gdigrab -framerate 60 -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 1M -bufsize 8M -r 60 -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   ffmpeg -loglevel repeat+level+debug -f gdigrab -draw_mouse 1 -i desktop -vf scale=1280:720 -vcodec h264_nvenc -r 30 -preset slow -maxrate 1M -bufsize 8M -f rtp rtp://192.168.1.18:5540 >config.sdp
+   
+   
+   ffmpeg -rtbufsize 500M -f gdigrab -video_size 1280:720 -show_region 1 -draw_mouse 1 -i title="ARK: Survival Evolved" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 1M -bufsize 8M output.mkv >config.sdp
+   
+   
+   ffmpeg -rtbufsize 500M -f gdigrab -video_size 1280:720 -show_region 1 -draw_mouse 1 -i title="ARK: Survival Evolved" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 1M -bufsize 8M output.mkv >config.sdp
+   
+   
+   
+   -f rtp rtp://192.168.1.18:5540
+   -f dshow -i video="screen-capture-recorder"
+   
+   -hwaccel cuvid -c:v h264_cuvid 
+   
+   -f x11grab -i :0.0
+   //////////////
+      
+   ffmpeg -loglevel repeat+level+verbose -rtbufsize 700M -framerate 30 -f dshow -i video="screen-capture-recorder" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 1M -bufsize 2M -f rtp NUL >config.sdp
+   
+   
+   ffmpeg -y -loglevel repeat+level+verbose -rtbufsize 700M -framerate 30 -f dshow -i video="screen-capture-recorder" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 1M -bufsize 2M -f rtp rtp://localhost:5540 >config.sdp
+   
+   ffmpeg -y -loglevel repeat+level+verbose -rtbufsize 500M -f dshow -i video="screen-capture-recorder" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 2M -bufsize 8M -r 30 -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
+   ffmpeg -y -loglevel repeat+level+verbose -rtbufsize 500M -f dshow -i video="screen-capture-recorder" -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 2M -bufsize 16M -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
+   ffmpeg -y -loglevel repeat+level+verbose -rtbufsize 500M -f gdigrab  -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset slow -maxrate 2M -bufsize 16M -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
+   ffmpeg -y -loglevel repeat+level+verbose -framerate 60 -f gdigrab -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 2M -bufsize 16M -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
+   ffmpeg -y -loglevel repeat+level+verbose -framerate 60 -f gdigrab -i desktop -vf scale=1280:720 -vcodec h264_nvenc -preset llhp -maxrate 2M -bufsize 8M -r 30 -f rtp rtp://192.168.1.15:5540 >config.sdp
+   
